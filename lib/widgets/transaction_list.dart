@@ -9,8 +9,9 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 565,
+    return transactions.isNotEmpty 
+    ? SizedBox(
+      height: MediaQuery.of(context).size.height / 1.15,
       child: ListView.builder(
         itemCount: transactions.length,
         itemBuilder: (BuildContext context, int index) {
@@ -56,6 +57,17 @@ class TransactionList extends StatelessWidget {
             ),
           );
         },
+      ),
+    )
+    : SizedBox(
+      height: MediaQuery.of(context).size.height / 1.5,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset('assets/images/zzz.png', width: 150, height: 150,),
+          Divider(height: 50, color: Colors.transparent),
+          Text("Transaksi Kosong ...", style: TextStyle(fontSize: 20),)
+        ],
       ),
     );
   }
