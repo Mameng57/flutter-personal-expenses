@@ -1,3 +1,4 @@
+import 'package:expenses_app/widgets/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import './widgets/transaction_add.dart';
@@ -35,6 +36,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
 
+  List<Transaction> get _recentTransactions {
+    return _userTransactions.where((element) {
+      return element.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   void _addNewTransaction({required String title, required double amount}) {
     final newTx = Transaction(
       id: DateFormat('DDDD').format(DateTime.now()), 
@@ -50,6 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _showAddNewTransaction(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (context) {
         return TransactionAdd(handler: _addNewTransaction);
@@ -60,7 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("Personal Expenses"),
         actions: [
@@ -72,13 +79,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: [
-          Container(
-            width: double.infinity,
-            child: Card(
-              child: Text("CHART"),
-            ),
-          ),
-          TransactionList(transactions: _userTransactions),
+          Chart(_recentTransactions),
+          Expanded(child: TransactionList(transactions: _userTransactions)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
