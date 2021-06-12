@@ -30,33 +30,37 @@ class _TransactionAddState extends State<TransactionAdd> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          TextField(
-            controller: titleController,
-            decoration: InputDecoration(
-              hintText: "Pengeluaran",
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.label),
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            TextField(
+              controller: titleController,
+              decoration: InputDecoration(
+                hintText: "Pengeluaran",
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.label),
+              ),
             ),
-          ),
-          Divider(color: Colors.transparent, height: 10,),
-          TextField(
-            controller: amountController,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              hintText: "Nominal",
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.attach_money),
+            Divider(color: Colors.transparent, height: 10,),
+            TextField(
+              controller: amountController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: "Nominal",
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.attach_money),
+              ),
             ),
-          ),
-          ElevatedButton(
-            onPressed: submitData,
-            child: Text("Tambah Baru"),
-          ),
-        ],
+            ElevatedButton(
+              onPressed: submitData,
+              child: Text("Tambah Baru"),
+            ),
+          ],
+        ),
       ),
     );
   }
