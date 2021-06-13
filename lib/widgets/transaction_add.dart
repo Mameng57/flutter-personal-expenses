@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionAdd extends StatefulWidget {
   final Function handler;
@@ -10,22 +11,39 @@ class TransactionAdd extends StatefulWidget {
 }
 
 class _TransactionAddState extends State<TransactionAdd> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  DateTime _pickedDate = DateTime.now();
 
-  final amountController = TextEditingController();
-
-  void submitData() {
-    final String enteredTitle = titleController.text;
-    final double enteredAmount = double.parse(amountController.text);
+  void _submitData() {
+    final String enteredTitle = _titleController.text;
+    final double enteredAmount = double.parse(_amountController.text);
 
     if(enteredTitle.isEmpty || enteredAmount <= 0)
       return;
 
     widget.handler(
-      title: titleController.text,
+      title: enteredTitle,
       amount: enteredAmount,
+      date: _pickedDate,
     );
     Navigator.of(context).pop();
+  }
+
+  void _startDatePicker() {
+    showDatePicker(
+      context: context, 
+      initialDate: DateTime.now(), 
+      firstDate: DateTime(DateTime.now().year),
+      lastDate: DateTime.now(),
+    ).then((value) {
+      if(value == null)
+        return;
+      else
+        setState(() {
+          _pickedDate = value;
+        });
+    });
   }
 
   @override
@@ -38,7 +56,7 @@ class _TransactionAddState extends State<TransactionAdd> {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             TextField(
-              controller: titleController,
+              controller: _titleController,
               decoration: InputDecoration(
                 hintText: "Pengeluaran",
                 border: OutlineInputBorder(),
@@ -47,7 +65,7 @@ class _TransactionAddState extends State<TransactionAdd> {
             ),
             Divider(color: Colors.transparent, height: 10,),
             TextField(
-              controller: amountController,
+              controller: _amountController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 hintText: "Nominal",
@@ -55,8 +73,28 @@ class _TransactionAddState extends State<TransactionAdd> {
                 prefixIcon: Icon(Icons.attach_money),
               ),
             ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              height: 80,
+              child: Row(
+                children: [
+                  Text("Tanggal: ${DateFormat.yMMMEd().format(_pickedDate)}"
+                  ),
+                  SizedBox(width: 15,),
+                  TextButton(
+                    child: Text("Pilih Tanggal", 
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: _startDatePicker,
+                  ),
+                ],
+              ),
+            ),
             ElevatedButton(
-              onPressed: submitData,
+              onPressed: _submitData,
               child: Text("Tambah Baru"),
             ),
           ],
