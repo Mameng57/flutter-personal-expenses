@@ -22,6 +22,6 @@ class Transaction {
     "id": id,
     "title": title,
     "amount": amount,
-    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+    "date": date.toIso8601String(),
   };
 }
