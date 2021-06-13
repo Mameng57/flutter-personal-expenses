@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:expenses_app/local_storage.dart';
 import 'package:expenses_app/widgets/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,17 +25,59 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: MyHomePage(),
+      home: MyHomePage(LocalStorage()),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final LocalStorage storage;
+
+  MyHomePage(this.storage);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    try {
+      widget.storage.readFile().then((jsonString) {
+        final data = jsonDecode(jsonString) as List;
+        final List<Transaction> transactions = data.map(
+          (element) => Transaction.fromJson(element)
+        ).toList();
+        Future.delayed(Duration(seconds: 2)).then((_) {
+          setState(() {
+            isLoading = false;
+            _userTransactions.addAll(transactions);
+          });
+        });
+      });
+    }
+    catch(exception) {
+      return;
+    }
+  }
+
+  void _saveToLocalStorage(String data) {
+    try {
+      widget.storage.writeFile(data);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Data Berhasil di simpan!")),
+      );
+    }
+    catch(exceptions) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Simpan gagal!")),
+      );
+    }
+  }
+
   final List<Transaction> _userTransactions = [];
 
   List<Transaction> get _recentTransactions {
@@ -79,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: () {}, 
+            onPressed: () => _saveToLocalStorage(jsonEncode(_userTransactions)), 
           ),
           IconButton(
             onPressed: () => _showAddNewTransaction(context), 
@@ -87,7 +131,18 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Column(
+      body: isLoading
+      ? Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            Divider(height: 50, color: Colors.transparent,),
+            Text("Loading data ..")
+          ],
+        ),
+      )
+      : Column(
         children: [
           Chart(_recentTransactions),
           Expanded(

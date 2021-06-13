@@ -10,4 +10,18 @@ class Transaction {
     required this.amount, 
     required this.date
   });
+
+  factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
+    id: json["id"],
+    title: json["title"],
+    amount: json["amount"],
+    date: DateTime.parse(json["date"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "amount": amount,
+    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+  };
 }
