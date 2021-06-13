@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:expenses_app/local_storage.dart';
-import 'package:expenses_app/widgets/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import './local_storage.dart';
+import './models/transaction.dart';
+import './widgets/chart.dart';
 import './widgets/transaction_add.dart';
 import './widgets/transaction_list.dart';
-import '../models/transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,8 +40,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool isLoading = true;
-
   @override
   void initState() {
     super.initState();
@@ -51,11 +49,9 @@ class _MyHomePageState extends State<MyHomePage> {
         final List<Transaction> transactions = data.map(
           (element) => Transaction.fromJson(element)
         ).toList();
-        Future.delayed(Duration(seconds: 2)).then((_) {
-          setState(() {
-            isLoading = false;
-            _userTransactions.addAll(transactions);
-          });
+
+        setState(() {
+          _userTransactions.addAll(transactions);
         });
       });
     }
@@ -131,18 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: isLoading
-      ? Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            Divider(height: 50, color: Colors.transparent,),
-            Text("Loading data ..")
-          ],
-        ),
-      )
-      : Column(
+      body: Column(
         children: [
           Chart(_recentTransactions),
           Expanded(
