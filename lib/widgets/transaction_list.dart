@@ -9,49 +9,27 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return transactions.isNotEmpty 
+    return transactions.isNotEmpty
     ? ListView.builder(
       itemCount: transactions.length,
       itemBuilder: (BuildContext context, int index) {
         return Card(
-          elevation: 3,
-          child: Row(
-            children: [
-              Container(
-                padding: EdgeInsets.all(10),
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Theme.of(context).primaryColor),
-                ),
-                child: Text(
-                  "Rp. ${transactions[index].amount.toStringAsFixed(3)}",
-                  style: TextStyle(
-                    fontSize: 20, 
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColor,
+          elevation: 4,
+          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+          child: ListTile(
+            leading: CircleAvatar(
+              radius: 35,
+              child: Padding(
+                padding: EdgeInsets.all(10.0),
+                child: FittedBox(
+                  child: Text("${transactions[index].amount.toStringAsFixed(3)}",
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "${transactions[index].title}",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    DateFormat('EEE - dd MMMM yyyy - HH:mm').format(transactions[index].date),
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            ),
+            title: Text("${transactions[index].title}", style: TextStyle(fontWeight: FontWeight.bold),),
+            subtitle: Text("${DateFormat('EEE - dd MMMM yyyy - HH:mm').format(transactions[index].date)}"),
           ),
         );
       },
