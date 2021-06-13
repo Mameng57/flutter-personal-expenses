@@ -68,7 +68,7 @@ class _TransactionAddState extends State<TransactionAdd> {
               controller: _amountController,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                hintText: "Nominal",
+                hintText: "Nominal (Dalam Ribuan)",
                 border: OutlineInputBorder(),
                 prefixIcon: Icon(Icons.attach_money),
               ),
