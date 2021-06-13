@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  flutter_native_splash: ^1.2.0
   intl: ^0.17.0
   path_provider: ^2.0.2
   flutter:
@@ -74,3 +75,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_native_splash:
+  color: "#42a5f5"
