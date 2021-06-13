@@ -42,12 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addNewTransaction({required String title, required double amount}) {
+  void _addNewTransaction({required String title, required double amount, required DateTime date}) {
     final newTx = Transaction(
-      id: DateFormat('DDDD').format(DateTime.now()),
+      id: DateFormat('DDDD').format(date) + (DateTime.now().second.toString()),
       title: title,
       amount: amount,
-      date: DateTime.now()
+      date: date,
     );
 
     setState(() {
@@ -65,12 +65,22 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Personal Expenses"),
         actions: [
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {}, 
+          ),
           IconButton(
             onPressed: () => _showAddNewTransaction(context), 
             icon: Icon(Icons.add),
@@ -80,7 +90,12 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: [
           Chart(_recentTransactions),
-          Expanded(child: TransactionList(transactions: _userTransactions)),
+          Expanded(
+            child: TransactionList(
+              transactions: _userTransactions,
+              deleteTransaction: _deleteTransaction,
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
