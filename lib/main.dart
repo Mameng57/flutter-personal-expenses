@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addNewTransaction({required String title, required double amount}) {
     final newTx = Transaction(
-      id: DateFormat('DDDD').format(DateTime.now()), 
+      id: DateFormat('DDDD').format(DateTime.now()),
       title: title,
       amount: amount,
       date: DateTime.now()
