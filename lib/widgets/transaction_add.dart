@@ -36,12 +36,12 @@ class _TransactionAddState extends State<TransactionAdd> {
       initialDate: DateTime.now(), 
       firstDate: DateTime(DateTime.now().year),
       lastDate: DateTime.now(),
-    ).then((value) {
-      if(value == null)
+    ).then((dateValue) {
+      if(dateValue == null)
         return;
       else
         setState(() {
-          _pickedDate = value;
+          _pickedDate = dateValue;
         });
     });
   }

@@ -59,6 +59,6 @@ class Chart extends StatelessWidget {
         ),
       ),
     )
-    : Container();
+    : SizedBox();
   }
 }

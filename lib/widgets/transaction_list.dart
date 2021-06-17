@@ -42,9 +42,11 @@ class TransactionList extends StatelessWidget {
     : SizedBox(
       height: MediaQuery.of(context).size.height / 1.5,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/images/zzz.png', width: 150, height: 150,),
+          Image.asset('assets/images/zzz.png', 
+            width: MediaQuery.of(context).size.width * 0.35,
+            height: MediaQuery.of(context).size.height * 0.15,
+          ),
           Divider(height: 50, color: Colors.transparent),
           Text("Transaksi Kosong ...", style: TextStyle(fontSize: 20),)
         ],

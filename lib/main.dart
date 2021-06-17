@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import './local_storage.dart';
 import './models/transaction.dart';
@@ -7,7 +8,15 @@ import './widgets/chart.dart';
 import './widgets/transaction_add.dart';
 import './widgets/transaction_list.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -55,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       });
     }
-    catch(exception) {
+    catch(exceptions) {
       return;
     }
   }
@@ -75,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final List<Transaction> _userTransactions = [];
+  bool _showChart = true;
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((element) {
@@ -113,23 +123,50 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    AppBar myAppBar = AppBar(
+      title: Text("Personal Expenses"),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.save),
+          onPressed: () => _saveToLocalStorage(jsonEncode(_userTransactions)), 
+        ),
+        IconButton(
+          onPressed: () => _showAddNewTransaction(context),
+          icon: Icon(Icons.add),
+        ),
+      ],
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Personal Expenses"),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () => _saveToLocalStorage(jsonEncode(_userTransactions)), 
-          ),
-          IconButton(
-            onPressed: () => _showAddNewTransaction(context), 
-            icon: Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: myAppBar,
       body: Column(
         children: [
-          Chart(_recentTransactions),
+          if(_userTransactions.isNotEmpty) (
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Chart"),
+                Switch(
+                  value: _showChart,
+                  onChanged: (val) {
+                    setState(() {
+                      _showChart = val;
+                    });
+                  }
+                ),
+              ],
+            )
+          ),
+          if(_showChart) (
+            SizedBox(
+              height: (
+                MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top -
+                myAppBar.preferredSize.height
+              ) * 0.25,
+              child: Chart(_recentTransactions)
+            )
+          ),
           Expanded(
             child: TransactionList(
               transactions: _userTransactions,
