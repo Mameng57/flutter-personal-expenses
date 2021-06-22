@@ -10,6 +10,8 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _mediaQuery = MediaQuery.of(context);
+
     return transactions.isNotEmpty
     ? ListView.builder(
       itemCount: transactions.length,
@@ -44,8 +46,8 @@ class TransactionList extends StatelessWidget {
       child: Column(
         children: [
           Image.asset('assets/images/zzz.png', 
-            width: MediaQuery.of(context).size.width * 0.35,
-            height: MediaQuery.of(context).size.height * 0.15,
+            width: _mediaQuery.size.width * 0.35,
+            height: _mediaQuery.size.height * 0.15,
           ),
           Divider(height: 50, color: Colors.transparent),
           Text("Transaksi Kosong ...", style: TextStyle(fontSize: 20),)
