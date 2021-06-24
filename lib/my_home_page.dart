@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Transaction> _userTransactions = [];
   bool _showChart = true;
+  bool _showFloatingButton = true;
 
   List<Transaction> get _recentTransactions {
     return _userTransactions.where((element) {
@@ -84,6 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void _deleteTransaction(String id) {
     setState(() {
       _userTransactions.removeWhere((element) => element.id == id);
+    });
+  }
+
+  void _scrollHandler(bool condition) {
+    setState(() {
+      _showFloatingButton = condition;
     });
   }
 
@@ -137,13 +144,17 @@ class _MyHomePageState extends State<MyHomePage> {
             child: TransactionList(
               transactions: _userTransactions,
               deleteTransaction: _deleteTransaction,
+              scrollHandler: _scrollHandler,
             ),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddNewTransaction(context),
-        child: Icon(Icons.add),
+      floatingActionButton: Visibility(
+        visible: _showFloatingButton,
+        child: FloatingActionButton(
+          onPressed: () => _showAddNewTransaction(context),
+          child: Icon(Icons.add),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
