@@ -97,15 +97,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     AppBar myAppBar = AppBar(
-      title: Text("Personal Expenses"),
+      title: const Text("Personal Expenses"),
       actions: [
         IconButton(
-          icon: Icon(Icons.save),
+          icon: const Icon(Icons.save),
           onPressed: () => _saveToLocalStorage(jsonEncode(_userTransactions)), 
         ),
         IconButton(
           onPressed: () => _showAddNewTransaction(context),
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
         ),
       ],
     );
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Chart"),
+                const Text("Chart"),
                 Switch(
                   value: _showChart,
                   onChanged: (val) {
@@ -153,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
         visible: _showFloatingButton,
         child: FloatingActionButton(
           onPressed: () => _showAddNewTransaction(context),
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

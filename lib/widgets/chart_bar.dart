@@ -23,7 +23,7 @@ class ChartBar extends StatelessWidget {
                 child: Text("Rp.${spending.toStringAsFixed(0)}k")
               ),
             ),
-            Divider(height: 4, color: Colors.transparent,),
+            const Divider(height: 4, color: Colors.transparent,),
             Container(
               width: 10,
               height: constraints.maxHeight * 0.6,
@@ -48,7 +48,7 @@ class ChartBar extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(height: 4, color: Colors.transparent,),
+            const Divider(height: 4, color: Colors.transparent,),
             SizedBox(
               height: constraints.maxHeight * 0.15,
               child: Text("$label")

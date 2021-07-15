@@ -59,28 +59,28 @@ class _TransactionAddState extends State<TransactionAdd> {
               controller: _titleController,
               decoration: InputDecoration(
                 hintText: "Pengeluaran",
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.label),
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.label),
               ),
             ),
-            Divider(color: Colors.transparent, height: 10,),
+            const Divider(color: Colors.transparent, height: 10,),
             TextField(
               controller: _amountController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Nominal (Dalam Ribuan)",
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.attach_money),
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.attach_money),
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 10),
               height: 80,
               child: Row(
                 children: [
                   Text("Tanggal: ${DateFormat.yMMMEd().format(_pickedDate)}"
                   ),
-                  SizedBox(width: 15,),
+                  const SizedBox(width: 15,),
                   TextButton(
                     child: Text("Pilih Tanggal", 
                       style: TextStyle(
@@ -95,7 +95,7 @@ class _TransactionAddState extends State<TransactionAdd> {
             ),
             ElevatedButton(
               onPressed: _submitData,
-              child: Text("Tambah Baru"),
+              child: const Text("Tambah Baru"),
             ),
           ],
         ),

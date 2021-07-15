@@ -31,15 +31,15 @@ class TransactionList extends StatelessWidget {
               leading: CircleAvatar(
                 radius: 35,
                 child: Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: FittedBox(
                     child: Text("${transactions[index].amount.toStringAsFixed(3)}",
-                      style: TextStyle(fontSize: 15),
+                      style: const TextStyle(fontSize: 15),
                     ),
                   ),
                 ),
               ),
-              title: Text("${transactions[index].title}", style: TextStyle(fontWeight: FontWeight.bold),),
+              title: Text("${transactions[index].title}", style: const TextStyle(fontWeight: FontWeight.bold),),
               subtitle: Text("${DateFormat('EEE - dd MMMM yyyy - HH:mm').format(transactions[index].date)}"),
               trailing: IconButton(
                 icon: Icon(Icons.delete, color: Theme.of(context).errorColor,),
@@ -71,8 +71,8 @@ class TransactionList extends StatelessWidget {
             width: _mediaQuery.size.width * 0.35,
             height: _mediaQuery.size.height * 0.15,
           ),
-          Divider(height: 50, color: Colors.transparent),
-          Text("Transaksi Kosong ...", style: TextStyle(fontSize: 20),)
+          const Divider(height: 50, color: Colors.transparent),
+          const Text("Transaksi Kosong ...", style: const TextStyle(fontSize: 20),)
         ],
       ),
     );

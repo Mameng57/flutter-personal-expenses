@@ -41,9 +41,9 @@ class Chart extends StatelessWidget {
     return recentTransaction.isNotEmpty
     ? Card(
       elevation: 6,
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: groupedTransactionValues.map((data) {
@@ -59,6 +59,6 @@ class Chart extends StatelessWidget {
         ),
       ),
     )
-    : SizedBox();
+    : const SizedBox();
   }
 }
